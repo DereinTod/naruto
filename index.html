@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Test Divertido - Naruto Shippuden</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <img src="naruto/pxfuel (1).jpg" alt="Naruto" class="fullscreen-image" />
+
+
+
+
+    <div v-if="!nombre">
+      <label for="nombre">Ingresa tu nombre:</label>
+      <input type="text" v-model="nombre" placeholder="Tu nombre" />
+      <button @click="guardarNombre">Iniciar Test</button>
+    </div>
+
+    <div v-else>
+      <h2>Hola, {{ nombre }}! Comencemos el test.</h2>
+      <div v-show="preguntaActual < preguntas.length">
+        <h3>{{ preguntas[preguntaActual].texto }}</h3>
+        <div v-for="(respuesta, index) in preguntas[preguntaActual].respuestas" :key="index">
+          <input type="radio" :id="'respuesta-' + index" :value="index" v-model="respuestaSeleccionada" />
+          <label :for="'respuesta-' + index">{{ respuesta }}</label>
+        </div>
+        <button @click="siguientePregunta">Siguiente</button>
+      </div>
+
+      <div v-else>
+        <h3>Resultado de {{ nombre }}:</h3>
+        <p v-if="puntos > 2">¡Excelente! Obtuviste {{ puntos }} puntos.</p>
+        <p v-else-if="puntos > 1">¡Bien hecho! Obtuviste {{ puntos }} puntos.</p>
+        <p v-else>¡Necesitas practicar más! Obtuviste {{ puntos }} puntos.</p>
+        <button @click="reiniciarTest">Reiniciar Test</button>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+
+</html>
